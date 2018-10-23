@@ -55,11 +55,7 @@ class Payment extends React.Component {
     return (
       <div className='payment'>
         <div id="dropin-container"></div>
-<<<<<<< HEAD
-        <button id="submit-button">Request payment method [NEW!!]</button>
-=======
         <button id="submit-button">Request payment method [NEW.]</button>
->>>>>>> 34c8b9f34b830c733286f5d8df245278cc608ecc
       </div>
     );
   }
