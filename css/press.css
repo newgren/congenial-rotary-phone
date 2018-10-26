@@ -31,6 +31,14 @@ html {
   margin: 0;
 }
 
+/* no outline on form things */
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+
 body {
   background-color: yellow;
   color:white;
@@ -41,6 +49,9 @@ body {
   padding:0;
 }
 
+.start {
+  cursor: none;
+}
 
 /* @media only screen
 and (min-device-width : 375px)
@@ -291,18 +302,17 @@ svg text {
 }
 
   /* begin BAG (child of SHOP)*/
-  .shop .bag {
+  .shop .bag, .shop .checkout {
     display: flex;
     font-size: 1.9vw;
-
     height: 82%;
   }
 
-  .shop .bag > div {
+  .shop .bag > div, .shop .checkout > div {
     padding: 0 2vw;
   }
 
-  .bag .items {
+  .bag .items, .checkout .left {
     flex: 7;
   }
 
@@ -310,7 +320,7 @@ svg text {
     color:blue;
     display: flex;
     font-family: questrial;
-    height: 20vh;
+    height: 14vw;
     margin-bottom: 3vh;
     width: 100%;
   }
@@ -361,13 +371,13 @@ svg text {
   }
 
 
-  .bag .summary {
+  .summary {
     color: blue;
     flex: 3;
     font-family: questrial;
   }
 
-  .bag .summary .title {
+  .summary .title {
     border-bottom: 0.4vh solid blue;
     display: block;
     font-family: galderglynn;
@@ -376,28 +386,28 @@ svg text {
     width: 100%;
   }
 
-  .bag .summary .bar {
+  .summary .bar {
     padding: 0.8vh 0;
   }
 
-  .bag .summary .bar:first-of-type {
+  .summary .bar:first-of-type {
     padding-top: 2.5vh;
   }
-  .bag .summary .bar:nth-of-type(3) {
+  .summary .bar:nth-of-type(3) {
     border-bottom: 0.4vh solid blue;
     padding-bottom: 2.5vh;
   }
-  .bag .summary .bar:nth-of-type(4) {
+  .summary .bar:nth-of-type(4) {
     padding: 2.5vh 0;
   }
 
-  .bag .summary .bar .key {
+  .summary .bar .key {
   }
-  .bag .summary .bar .val {
+  .summary .bar .val {
     float: right;
   }
 
-  .bag .summary button {
+  .summary button {
     background-color: blue;
     border: 0;
     color:white;
@@ -407,15 +417,24 @@ svg text {
     width: 100%;
   }
 
-  .bag .summary button:active {
+  .summary button:active {
     background-color: yellow;
     color:blue;
   }
-  .bag .summary button:focus {
+  .summary button:focus {
     outline: 0;
   }
-  .bag .summary > img {
+  .summary > img {
     width: 100%;
+  }
+
+  .payAndVerify {
+    display: flex;
+    width: 100%;
+  }
+  .payAndVerify > div {
+    flex: 1;
+    padding-right: 2vw;
   }
 
   /* end BAG */
@@ -473,12 +492,18 @@ svg text {
   font-size: 4.5vw;
 }
 
-.item .right span#h2 {
+.item .right span#h2, .item .right span#h3 {
   display: block;
   font-family: questrial;
   font-size: 2.5vw;
   margin: 2vh 0;
 }
+
+.item .right span#h3 {
+  font-size: 1.5vw;
+  padding-right: 2vw;
+}
+
 
 .sizebar {
   height: 3.5vw;
@@ -575,20 +600,123 @@ svg text {
 .item .right #sizeError.visible {
 
 }
-/*
-.bagItem {
-  max-height: 150px;
+
+.checkout {
+  color: blue;
+  font-family: questrial;
 }
 
-.bagItem > .left {
-  height: 150px;
+.checkout > .formform {
+  font-size: 1.5vw;
+  width: 100%;
 }
 
-.bagItem img {
-  left: -25px;
-  position: relative;
-  top: -25px;
-} */
+.formform > form {
+  margin-bottom: 0;
+}
+
+.formform > span {
+  color:red;
+}
+
+.checkout input {
+  border: 0.2vw solid blue;
+  color:blue;
+  font-family: questrial;
+  font-size: 1.5vw;
+  height: 3vw;
+  margin-bottom: 1vw;
+  padding-left: 1vw;
+  width: 100%;
+}
+
+.checkout input:-webkit-autofill, .checkout select:-webkit-autofill {
+  /* Change the white to any color  */
+  -webkit-box-shadow: 0 0 0 30px white inset;
+  /* Change text in autofill textbox */
+  -webkit-text-fill-color: blue !important;
+}
+
+.formform select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  background-color: white;
+  border: 0.2vw solid blue;
+  border-radius: 0;
+  color:blue;
+  font-family: questrial;
+  font-size: 1.5vw;
+  height: 3vw;
+  margin-bottom: 2vh;
+  padding: 0.5vw 1vw;
+  width: 100%;
+  /* size:4; */
+
+  /* arrow things */
+  background: url('../iconImages/select_arrow_desktop.png');
+  background-position: right 1.7vw center;
+  background-repeat: no-repeat;
+  background-size: 1vw;
+}
+
+.formform select option {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: yellow;
+}
+
+.checkout .twofer {
+  display: flex;
+  width: 100%;
+}
+
+.checkout .twofer > div {
+  flex: 1;
+}
+.checkout .twofer > .one {
+  padding-right: 1vw;
+}
+.checkout .twofer > .two {
+  padding-left: 1vw;
+}
+
+.shippingVerification div.bit {
+  font-family: questrial;
+  font-size: 1.3vw;
+}
+
+.shippingVerification span.title {
+  font-size: 1.5vw;
+  font-weight: bold;
+}
+
+.completed > div {
+  background-color: blue;
+  color:white;
+  display: inline-block;
+  font-family: galderglynn;
+  font-size: 10vw;
+}
+
+.completed button {
+  background-color: white;
+  border: 0.4vw solid blue;
+  color:blue;
+  display: inline-block;
+  font-family: questrial;
+  font-size: 5vw;
+  padding: 1vw 2vw;
+}
+
+.completed button:hover {
+  background-color: blue;
+  border: 0.2vw solid white;
+  color:white;
+
+}
 
 @media only screen and (max-width: 650px) {
 

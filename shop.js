@@ -10,6 +10,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 import Item from './item.js';
 import Bag from './bag.js';
+import Checkout from './checkout.js';
 
 import catalog from './product/catalog.js';
 
@@ -25,11 +26,13 @@ var Shop = function (_React$Component) {
 
     _this.goToBag = props.goToBag;
     _this.goToHome = props.goToHome;
+    _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag'
+      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
-      cart: { 0: { 'L': 1 }, 1: { 'M': 5 } }
+      cart: {}
     };
     return _this;
   }
@@ -131,6 +134,44 @@ var Shop = function (_React$Component) {
       }
     }
   }, {
+    key: 'setCheckoutMode',
+    value: function setCheckoutMode(newMode) {
+      console.log("sET");
+      this.setState({ checkoutMode: newMode });
+    }
+  }, {
+    key: 'formatMoney',
+    value: function formatMoney(val) {
+      //  return Math.round(val * 100) / 100;
+      return val.toFixed(2);
+    }
+  }, {
+    key: 'getSubtotal',
+    value: function getSubtotal() {
+      var cart = this.state.cart;
+      var keys = Object.keys(cart);
+      var subtotal = 0;
+      keys.forEach(function (key) {
+        var price = catalog.items[key].price;
+        var shirt = cart[key];
+        var shirtKeys = Object.keys(shirt);
+        shirtKeys.forEach(function (shirtkey) {
+          subtotal += shirt[shirtkey] * price;
+        });
+      });
+      return subtotal;
+    }
+  }, {
+    key: 'getShipping',
+    value: function getShipping() {
+      return 2.05;
+    }
+  }, {
+    key: 'getTotal',
+    value: function getTotal() {
+      return this.getSubtotal() + this.getShipping();
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -154,6 +195,10 @@ var Shop = function (_React$Component) {
               'span',
               { id: 'shopProductName' },
               'SHOPPING BAG'
+            ) : this.state.mode == 'checkout' ? React.createElement(
+              'span',
+              { id: 'shopProductName' },
+              'CHECKOUT'
             ) : React.createElement('img', { src: './iconImages/SHOP.png', id: 'shopBannerText' }) : React.createElement(
               'span',
               { id: 'shopProductName' },
@@ -164,7 +209,7 @@ var Shop = function (_React$Component) {
               { id: 'bagbannericon' },
               React.createElement('img', { src: './iconImages/bag_desktop.png',
                 onClick: function onClick() {
-                  return _this2.setState({ mode: 'bag', sel: -1 });
+                  return _this2.getCartSize > 0 ? _this2.setState({ mode: 'bag', sel: -1 }) : alert('add something to your cart first!');
                 }
               }),
               React.createElement(
@@ -183,9 +228,20 @@ var Shop = function (_React$Component) {
                   return _this2.setState({ sel: id, mode: 'item' });
                 }, key: item.name });
             })
-          ) : React.createElement(Bag, { cart: this.state.cart, remove: function remove(index, size) {
+          ) : this.state.mode == 'bag' ? React.createElement(Bag, {
+            cart: this.state.cart,
+            remove: function remove(index, size) {
               return _this2.removeFromCart(index, size);
-            } }) : React.createElement(Item, { item: catalog.items[this.state.sel],
+            },
+            goToCheckout: function goToCheckout() {
+              return _this2.setState({ mode: 'checkout' });
+            },
+            getSubtotal: this.getSubtotal.bind(this) }) : this.state.mode == 'checkout' ? React.createElement(Checkout, { cart: this.state.cart,
+            mode: this.state.checkoutMode,
+            setMode: function setMode(newMode) {
+              return _this2.setCheckoutMode(newMode);
+            },
+            completeCheckout: this.goToCompleted }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
             addToCart: function addToCart(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }
