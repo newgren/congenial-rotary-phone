@@ -16,7 +16,7 @@ class Shop extends React.Component {
     this.goToHome = props.goToHome;
     this.goToCompleted = props.goToCompleted;
     this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
@@ -191,7 +191,9 @@ class Shop extends React.Component {
                 <div className='desktop scroller'>
                   {catalog.items.map((item, id) =>
                     <img src={'./product/'+item.image_urls[0]+'.png'}
-                         onClick={() => this.setState({sel: id, mode: 'item'})} key={item.name}/>
+                         className='scrollerItem'
+                         onClick={() => this.setState({sel: id, mode: 'item'})}
+                         key={item.name}/>
                   )}
                 </div>
               :
@@ -200,12 +202,15 @@ class Shop extends React.Component {
                     cart={this.state.cart}
                     remove={(index, size) => this.removeFromCart(index, size)}
                     goToCheckout={() => this.setState({mode: 'checkout'})}
-                    getSubtotal={this.getSubtotal.bind(this)} />                  :
+                    goToBrowse={()=>this.setState({mode: 'browse'})}
+                    getSubtotal={this.getSubtotal.bind(this)}
+                    getCartSize={this.getCartSize.bind(this)} />                  :
                   this.state.mode == 'checkout' ?
                     <Checkout cart={this.state.cart}
                               mode={this.state.checkoutMode}
                               setMode={(newMode) => this.setCheckoutMode(newMode)}
-                              completeCheckout={this.goToCompleted} />
+                              completeCheckout={this.goToCompleted}
+                              goBack={this.handleBack.bind(this)}/>
                   :
                     (null)
               )
@@ -220,8 +225,7 @@ class Shop extends React.Component {
             )}
           </div>
         </div>
-        <span className='slowdownkiddo'>oh.. the site's not supposed to do that. click <a href='https://welcomepress.xyz'>here</a> to go to back to a version of WELCOME PRESS that's identical to this one except it won't let you do this</span>
-        <span className='slowdownkiddo'>Re: that message above and to the left.  ok so we've gotten WAY too many emails regarding the above message. people are saying things like, "why don't you just update this version of the site to the new version so this isn't a problem in the first place?? you clearly already have fixed the bug, so just update it." well, we're never going to change it so we hope that give you an idea of the type of business we're operating here. thank you. ~WP</span>
+        <span className='slowdownkiddo'><a target="_blank" href='http://brutalistwebsites.com/welcomepress.xyz/'>here</a></span>
       </div>
     );
   }

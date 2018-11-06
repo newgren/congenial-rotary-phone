@@ -264,7 +264,7 @@ svg text {
 }
 
 .banner img#leftBannerIcon {
-  cursor: pointer;
+  cursor: w-resize;
   height: 40%;
   left: 0px;
   padding-left: 2vw;
@@ -290,7 +290,7 @@ svg text {
 
 .banner #bagbannericon {
   align-items: center;
-  cursor: pointer;
+  cursor: e-resize;
   display: flex;
   height: 55%;
   justify-content: center;
@@ -316,13 +316,24 @@ svg text {
 
 .shop .scroller {
   -webkit-transition: left 1s;
-  height: 82%;
+  height: 81%;
+  padding-bottom: 1vw;
+  padding-left: 1vw;
   transition: left 1s;
   white-space: nowrap;
 }
 
 .shop .scroller > img {
+  cursor: pointer;
   height: 100%;
+  transition: filter 0.1s;
+  transition-timing-function: ease-in;
+}
+
+.shop .scroller > img:hover {
+  filter: hue-rotate(180deg);
+  /* -webkit-filter: invert(1); */
+   /* filter: invert(1); */
 }
 
 .shop .slowdownkiddo {
@@ -352,6 +363,34 @@ svg text {
 
   .shop .bag > div, .shop .checkout > div {
     padding: 0 2vw;
+  }
+
+  .bag .items #emptyMessage {
+    align-items: center;
+    color:blue;
+    display: flex;
+    flex-direction: column;
+    font-family: questrial;
+    justify-content: center;
+    padding-top: 2vw;
+    width: 100%;
+  }
+
+  .bag .items #emptyMessage #emptyButton {
+    background-color: blue;
+    border: 0.2vw solid blue;
+    color:white;
+    cursor: w-resize;
+    font-family: questrial;
+    font-weight: bold;
+    margin-top: 2vw;
+    padding: 1vw;
+    pointer-events: all;
+  }
+
+  .bag .items #emptyMessage #emptyButton:hover {
+    background-color: yellow;
+    color:blue;
   }
 
   .bag .items, .checkout .left {
@@ -457,9 +496,22 @@ svg text {
     border: 0.2vw solid blue;
     color:white;
     display: block;
-    font-size: 1.7vw;
+    font-family: questrial;
+    font-size: 1.8vw;
     padding: 1vw;
     width: 100%;
+  }
+
+  .summary button:hover {
+    cursor: pointer;
+  }
+
+  .summary button:disabled {
+    opacity: 0.5;
+  }
+
+  .summary button:disabled:hover {
+    cursor: wait;
   }
 
   .summary button:active {
@@ -473,6 +525,33 @@ svg text {
     width: 100%;
   }
 
+  [data-braintree-id="choose-a-way-to-pay"] {
+    color:blue;
+    font-family: questrial;
+    font-size: 2.2vw;
+    font-weight: bold;
+  }
+
+  [data-braintree-id="toggle"] {
+    background: none;
+    color:blue;
+    font-family: questrial;
+    font-size: 1.5vw;
+    text-align: left;
+    text-decoration: underline;
+    text-transform: lowercase;
+  }
+  [data-braintree-id="toggle"] span {
+    border: none;
+  }
+
+  [data-braintree-id="toggle"]:hover {
+    background-color: yellow;
+    border: 0.2vw solid blue;
+    border-radius: 0;
+    cursor: w-resize;
+  }
+
   .payment #dropin-container {
     display: none;
   }
@@ -480,6 +559,10 @@ svg text {
   .payment #loadingBox {
     color: blue;
     height: 100%;
+    width: 100%;
+  }
+
+  .payment #loadingBox img {
     width: 100%;
   }
 
@@ -663,6 +746,10 @@ select option {
   font-family: questrial;
 }
 
+.checkout .left {
+  overflow-y: scroll;
+}
+
 .checkout > .formform {
   font-size: 1.5vw;
   width: 100%;
@@ -703,6 +790,7 @@ select option {
   align-items: center;
   display: flex;
   float: left;
+  margin-bottom: 3vw;
   width: 100%;
 }
 
@@ -773,6 +861,21 @@ select option {
   font-size: 2.2vw;
   font-weight: bold;
   margin-bottom: 1vw;
+}
+
+.shippingVerification .title.second ,
+.shippingVerification .title.third  {
+  margin-top: 1vw;
+}
+
+#badAddressBack {
+  font-size: 2vw;
+  text-decoration: underline;
+}
+
+#badAddressBack:hover {
+  cursor: pointer;
+  text-decoration: overline;
 }
 
 .completed > div {

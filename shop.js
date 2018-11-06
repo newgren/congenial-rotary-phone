@@ -29,7 +29,7 @@ var Shop = function (_React$Component) {
     _this.goToHome = props.goToHome;
     _this.goToCompleted = props.goToCompleted;
     _this.state = {
-      mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
+      mode: 'checkout', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
       pos: 0,
       sel: -1,
@@ -237,9 +237,11 @@ var Shop = function (_React$Component) {
             { className: 'desktop scroller' },
             catalog.items.map(function (item, id) {
               return React.createElement('img', { src: './product/' + item.image_urls[0] + '.png',
+                className: 'scrollerItem',
                 onClick: function onClick() {
                   return _this2.setState({ sel: id, mode: 'item' });
-                }, key: item.name });
+                },
+                key: item.name });
             })
           ) : this.state.mode == 'bag' ? React.createElement(Bag, {
             cart: this.state.cart,
@@ -249,12 +251,17 @@ var Shop = function (_React$Component) {
             goToCheckout: function goToCheckout() {
               return _this2.setState({ mode: 'checkout' });
             },
-            getSubtotal: this.getSubtotal.bind(this) }) : this.state.mode == 'checkout' ? React.createElement(Checkout, { cart: this.state.cart,
+            goToBrowse: function goToBrowse() {
+              return _this2.setState({ mode: 'browse' });
+            },
+            getSubtotal: this.getSubtotal.bind(this),
+            getCartSize: this.getCartSize.bind(this) }) : this.state.mode == 'checkout' ? React.createElement(Checkout, { cart: this.state.cart,
             mode: this.state.checkoutMode,
             setMode: function setMode(newMode) {
               return _this2.setCheckoutMode(newMode);
             },
-            completeCheckout: this.goToCompleted }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
+            completeCheckout: this.goToCompleted,
+            goBack: this.handleBack.bind(this) }) : null : React.createElement(Item, { item: catalog.items[this.state.sel],
             addToCart: function addToCart(size, qty) {
               return _this2.addToCart(_this2.state.sel, size, qty);
             }
@@ -272,18 +279,11 @@ var Shop = function (_React$Component) {
         React.createElement(
           'span',
           { className: 'slowdownkiddo' },
-          'oh.. the site\'s not supposed to do that. click ',
           React.createElement(
             'a',
-            { href: 'https://welcomepress.xyz' },
+            { target: '_blank', href: 'http://brutalistwebsites.com/welcomepress.xyz/' },
             'here'
-          ),
-          ' to go to back to a version of WELCOME PRESS that\'s identical to this one except it won\'t let you do this'
-        ),
-        React.createElement(
-          'span',
-          { className: 'slowdownkiddo' },
-          'Re: that message above and to the left.  ok so we\'ve gotten WAY too many emails regarding the above message. people are saying things like, "why don\'t you just update this version of the site to the new version so this isn\'t a problem in the first place?? you clearly already have fixed the bug, so just update it." well, we\'re never going to change it so we hope that give you an idea of the type of business we\'re operating here. thank you. ~WP'
+          )
         )
       );
     }
