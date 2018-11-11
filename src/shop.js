@@ -18,6 +18,7 @@ class Shop extends React.Component {
     this.state = {
       mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
+      productForced: false,
       pos: 0,
       sel: -1,
       cart: {
@@ -48,6 +49,7 @@ class Shop extends React.Component {
   }
 
   addToCart(id, size, qty) {
+    fbq('track', 'AddToCart');
     ga('send', {
       hitType: 'event',
       eventCategory: 'product',
@@ -195,7 +197,11 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
     return this.getSubtotal() + this.getShipping();
   }
 
-
+  componentDidMount() {
+    if(!this.state.productForced && this.props.forceProduct) {
+      this.setState({productForced: true, sel: 0, mode: 'item'});
+    }
+  }
 
   render() {
     return (
@@ -255,6 +261,7 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
                     cart={this.state.cart}
                     remove={(index, size) => this.removeFromCart(index, size)}
                     goToCheckout={() => {
+                      fbq('track', 'InitiateCheckout');
                       ga('send', {
                         hitType: 'event',
                         eventCategory: 'product',

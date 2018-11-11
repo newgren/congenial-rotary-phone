@@ -31,6 +31,7 @@ var Shop = function (_React$Component) {
     _this.state = {
       mode: 'browse', // 'browse' | 'item' | 'bag' | 'checkout' | 'complete'
       checkoutMode: 'shipping', // 'shipping' | 'payment'
+      productForced: false,
       pos: 0,
       sel: -1,
       cart: {}
@@ -66,6 +67,7 @@ var Shop = function (_React$Component) {
   }, {
     key: 'addToCart',
     value: function addToCart(id, size, qty) {
+      fbq('track', 'AddToCart');
       ga('send', {
         hitType: 'event',
         eventCategory: 'product',
@@ -224,6 +226,13 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
       return this.getSubtotal() + this.getShipping();
     }
   }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      if (!this.state.productForced && this.props.forceProduct) {
+        this.setState({ productForced: true, sel: 0, mode: 'item' });
+      }
+    }
+  }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -300,6 +309,7 @@ API=RateV4&XML=<RateV4Request USERID=\"" + userid + "\">\
               return _this2.removeFromCart(index, size);
             },
             goToCheckout: function goToCheckout() {
+              fbq('track', 'InitiateCheckout');
               ga('send', {
                 hitType: 'event',
                 eventCategory: 'product',
