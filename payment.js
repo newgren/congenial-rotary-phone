@@ -10,11 +10,11 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var e = React.createElement;
 var server = 'welcomepresspayment.tk';
-var port = '442';
+var port = '443';
 var dropinInstance;
 var braintreeErrorMessage = 'Something went wrong :/ Try refreshing the page.';
 
-var production = false;
+var production = true;
 
 var Payment = function (_React$Component) {
   _inherits(Payment, _React$Component);
